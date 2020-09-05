@@ -1,0 +1,174 @@
+<div class="cate-bg mb-2 categort-pro fnb">
+<div class="category-tab tabpro pro-nepr">
+    <!--category-tab-->
+      <div class="cat-tab">
+     <div class="head-t">
+        <h4 class="heading-home text-left pull-left"><span>{{tab_titlem}}</span><button type="button" class="btn btn-primary toggle collapsed catb" data-toggle="collapse" data-target="#cat_tab"></button></h4><hr> </div>
+             <ul class="nav nav-tabs cattab collapse footer-collapse" id="cat_tab">
+                {% set i = 0 %}
+                {% for category in categories %}
+                  {% if i == 12 %}
+                    <li class="wbview_more webTab">
+                       {% if category.image_name %}
+                            <img src="{{ category.image_name }}" class="img-responsive center-block" alt="">
+                        {% else %}
+                            <img src="image/no_image.png" class="img-responsive center-block cat-noimg" alt="">
+                        {% endif %}
+                            <h4 class="text-center"><a href="{{ category.href }}" class="">{{ category.name }}</a></h4>
+                      <a class="">
+                        <div class="dots"></div>
+                        <span class="categoryName">More</span>
+                      </a>
+                    </li>
+                  </ul>
+     </div>
+
+  <div class="row">
+      <div class="home-cat col-xs-12" id="cat_tab">
+          <ul class="viewmore text-right">
+            {% endif %}
+                  {% if loop.index0 == 0 %}
+                      {% set class = ' class="active webTab"' %}
+                  {% else %}
+                      {% set class = ' class="webTab"' %}
+                  {% endif %}
+                  <li {{class}}><a href="#tab-{{loop.index}}" data-toggle="tab">{{category.category}}</a></li>
+                  {% set i = i + 1 %}
+              {% endfor %}
+          </ul>
+      </div>
+<!--     </div> -->
+    <div class="tab-content home-tab col-xs-12">
+        {% for products in categories %}
+            {% if loop.index0 == 0 %}
+                {% set class = ' active in' %}
+            {% else %}
+                {% set class = ''%}
+            {% endif %}
+            <div class="tab-pane fade{{class}}" id="tab-{{loop.index}}">
+                <div id="cattab" class="owl-theme owl-carousel">
+                    {% for product in products.products %}
+                        <div class="product-layout col-xs-12">
+                             <div class="product-thumb transition">
+                                <div class="image">
+                                    <div class="hoverbg">
+                                          <!-- Webibazaar Images Start -->
+                                            <div class="owl-catadditional">
+                                              <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive center-block" /></a>
+                                              {% set t = 0 %}
+                                              {% for more_image in product.more_images %}
+                                              {% for pop in more_image %}
+                                              {% if t == 0 %}
+                                                <a href="{{ product.href }}"><img src="{{ pop.popup_more }}" class="img-responsive second-img" alt="hover image"/></a>
+                                                {% set t = t + 1 %}
+                                            {% endif %}
+                                              {% endfor %}
+                                              {% endfor %}
+                                            </div>
+
+                                          <!-- End -->
+                                          {# {% if product.is_new %}<span class="new-product">NEW</span>{% endif %}
+                                        {% if product.tag_per  %}
+                                            <span class="sale">{{ product.tag_per }}%</span>
+                                        {% endif %} #}
+                                    </div>
+                                </div>
+      <div class="caption">
+         <div class="opbtn">
+       <h4  class="col-xs-12 protitle text-left"><a href="{{ product.href }}">{{ product.name }}</a></h4>
+         {% if product.price %}
+        <div class="price col-sm-6 col-xs-12 text-left">
+          {% if not product.special %}
+          {{ product.price }}
+          {% else %}
+          <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+          {% endif %}
+         {#  {% if product.tax %}
+          <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+          {% endif %} #}
+        </div>
+        {% endif %}
+          <div class="col-sm-6 col-xs-12 rat">
+        {% if product.rating %}
+          <div class="rating text-right">
+            {% for i in 1..5 %}
+            {% if product.rating < i %}
+            <span class="fa fa-stack">
+              <i class="fa fa-star-o fa-stack-2x"></i>
+            </span>
+            {% else %}
+            <span class="fa fa-stack">
+              <i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i>
+            </span>
+            {% endif %}
+          {% endfor %}</div>{% else %}
+          <div class="rating text-right">{% for i in 1..5 %}
+          <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+          {% endfor %}</div>
+        {% endif %}
+      </div>
+      </div>
+       
+  <div class="button-group">
+      <div class="absbtn">
+         <button type="button"  onclick="cart.add('{{ product.product_id }}');" class="cartb"><svg width="18px" height="17px"><use xlink:href="#pcart"></use></svg><span>
+          {#{{ button_cart }}#}</span></button>
+        <div class="wish"><button type="button" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');" class="bwish"><svg width="19px" height="19px"><use xlink:href="#pwish"></use></svg>{# {{ button_wishlist }} #}</button></div>
+        <div class="view"><button type="button" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');" class="bcom"><svg width="16px" height="16px"><use xlink:href="#pcom"></use></svg>{# {{ button_compare }} #}</button></div>
+       <div class="bquickv" title="Quickview"> </div> 
+      </div>
+    </div> 
+      </div>
+      
+                             </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</div> 
+ 
+
+<!--/category-tab-->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    $(".tab-content .tab-pane #cattab").owlCarousel({
+    itemsCustom : [
+    [0, 2],
+    [480, 2],
+    [600, 3],
+    [768, 2],
+    [900, 3],
+    [1200, 3],
+    [1410, 4],
+    [1590, 4]
+    ],
+      // autoPlay: 1000,
+      navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+      navigation : true,
+      pagination:false
+    });
+
+     if ($(document).width() > 599){
+     var count_block = $('.tabpro .webTab').length;
+     var number_blocks = 7;
+     if(count_block < number_blocks){
+          return false; 
+     } else {
+          $('.tabpro .webTab').each(function(i,n){
+                if(i> number_blocks) {
+                    $(this).addClass('it_hide_wbtab');
+                }
+          })
+          $('.it_hide_wbtab').hide();
+          $('.tabpro .wbview_more').click(function() {
+                $(this).toggleClass('active');
+                $('.it_hide_wbtab').slideToggle();
+          });
+     }
+}
+    });
+</script>

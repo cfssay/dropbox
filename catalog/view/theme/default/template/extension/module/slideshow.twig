@@ -1,0 +1,29 @@
+<div class="homeslider-container smid snwidthslb s-panel">
+  <div class="loader wrloader"></div>
+  <div class="slider slider-for">
+    {% for banner in banners %}
+      <div>
+        <div class="text-xs-left slideimg">         
+          {% if banner.link %}
+        <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>
+        {% else %}
+        <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>
+      {% endif %}
+    </div>
+    </div>
+    {% endfor %}
+  </div>
+<div class="appsbtn"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('.slider-for').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        infinite: true,
+        // autoPlay: 10000,
+        fade: true
+    });
+});
+</script>
